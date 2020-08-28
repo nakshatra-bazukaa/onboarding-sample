@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -16,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
 
     private OnboardingAdapter onboardingAdapter;
     private LinearLayout layoutOnboardingIndicators;
+    private Button buttonOnboardingAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +27,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         layoutOnboardingIndicators = findViewById(R.id.layoutOnboardingIndicator);
+        buttonOnboardingAction = findViewById(R.id.buttonOnboardingAction);
 
         setupOnboardingItems();
 
-        ViewPager2 onboardingViewPager = findViewById(R.id.onboardingViewpager);
+        final ViewPager2 onboardingViewPager = findViewById(R.id.onboardingViewpager);
         onboardingViewPager.setAdapter(onboardingAdapter);
 
         setOnboardingIndicators();
@@ -37,6 +42,17 @@ public class MainActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
                 setCurrentOnboardingIndicator(position);
+            }
+        });
+        buttonOnboardingAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onboardingViewPager.getCurrentItem() + 1 < onboardingAdapter.getItemCount()){
+                    onboardingViewPager.setCurrentItem(onboardingViewPager.getCurrentItem());
+                }else{
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
+                }
             }
         });
     }
@@ -93,6 +109,11 @@ public class MainActivity extends AppCompatActivity {
                         ContextCompat.getDrawable(getApplicationContext(), R.drawable.onboarding_indicator_inactive)
                 );
             }
+        }
+        if(index == onboardingAdapter.getItemCount() - 1){
+            buttonOnboardingAction.setText("Start");
+        }else{
+            buttonOnboardingAction.setText("Next");
         }
     }
 }
