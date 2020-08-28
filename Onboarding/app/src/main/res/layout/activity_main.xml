@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
 
-    <com.google.android.material.button.MaterialButton
+    <Button
         android:id="@+id/buttonOnboardingAction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,6 +15,7 @@
         android:layout_marginBottom="15dp"
         android:textSize="15sp"
         app:cornerRadius="20dp"
+        android:background="@drawable/onboarding_indicator_active"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
     <androidx.viewpager2.widget.ViewPager2
